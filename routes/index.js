@@ -10,6 +10,7 @@ const User = require('./../models/User');
 
 // Load Input Validation
 const validateRegisterInput = require('./../validation/register');
+const validateLoginInput = require('./../validation/login');
 
 //Test recipes endpoint
 router.get('/recipes/test', async (req, res) => {
@@ -25,6 +26,7 @@ router.get('/users/test', async (req, res) => {
   });
 });
 
+// Register users
 router.post('/users/register', async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -55,6 +57,42 @@ router.post('/users/register', async (req, res) => {
         }
       });
     });
+  }
+});
+
+// Login users
+router.post('/users/login', async (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    errors.email = 'User not found';
+    return res.status(404).json(errors);
+  }
+  // Check Password
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (isMatch) {
+    // User matched
+    const payload = { id: user.id, name: user.name }; // Create JWT Payload
+
+    // Sign Token
+    jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+      res.json({
+        success: true,
+        token: 'Bearer ' + token
+      });
+    });
+  } else {
+    errors.password = 'Password incorrect';
+    return res.status(400).json(errors);
   }
 });
 
