@@ -24,6 +24,9 @@ mongoose.connection.on('error', err => {
 
 //Passport middleware - handles logins
 app.use(passport.initialize());
+require('./config/passport')(passport);
+
+//Passport config
 
 //Initialize routes
 app.use('/api', routes);

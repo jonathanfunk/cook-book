@@ -8,9 +8,13 @@ const passport = require('passport');
 //Load Users model
 const User = require('./../models/User');
 
+//Load Recipe model
+const Recipe = require('./../models/Recipe');
+
 // Load Input Validation
 const validateRegisterInput = require('./../validation/register');
 const validateLoginInput = require('./../validation/login');
+const validateRecipeInput = require('./../validation/recipe');
 
 //Test recipes endpoint
 router.get('/recipes/test', async (req, res) => {
@@ -95,5 +99,27 @@ router.post('/users/login', async (req, res) => {
     return res.status(400).json(errors);
   }
 });
+
+//Create Recipe
+router.post(
+  '/recipe',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateRecipeInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    const newRecipe = new Recipe({
+      name: req.body.name,
+      ingredients: req.body.ingredients,
+      directions: req.body.directions,
+      user: req.user.id
+    });
+    newRecipe.save();
+    res.json(newRecipe);
+  }
+);
 
 module.exports = router;
