@@ -100,9 +100,49 @@ router.post('/users/login', async (req, res) => {
   }
 });
 
+//Get Recipes
+router.get('/recipes', async (req, res) => {
+  try {
+    const recipe = await Recipe.find(req.body);
+    res.json(recipe);
+  } catch (err) {
+    res.status(404).json({ norecipesfound: 'No recipes found' });
+  }
+});
+
+//Get Recipe by slug
+router.get('/recipes/slug/:slug', async (req, res) => {
+  const errors = {};
+  try {
+    const recipe = await Recipe.findOne({ slug: req.params.slug });
+    if (!recipe) {
+      errors.norecipe = 'This recipe does not exist';
+      return res.status(404).json(errors);
+    }
+    res.json(recipe);
+  } catch (err) {
+    res.status(404).json({ norecipesfound: 'No recipes found' });
+  }
+});
+
+//Get Recipe by id
+router.get('/recipes/id/:id', async (req, res) => {
+  const errors = {};
+  try {
+    const recipe = await Recipe.findOne({ id: req.params._id });
+    if (!recipe) {
+      errors.norecipe = 'This recipe does not exist';
+      return res.status(404).json(errors);
+    }
+    res.json(recipe);
+  } catch (err) {
+    res.status(404).json({ norecipesfound: 'No recipes found' });
+  }
+});
+
 //Create Recipe
 router.post(
-  '/recipe',
+  '/recipes',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateRecipeInput(req.body);
