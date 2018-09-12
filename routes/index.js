@@ -18,14 +18,14 @@ const validateRecipeInput = require('./../validation/recipe');
 
 //Test recipes endpoint
 router.get('/recipes/test', async (req, res) => {
-  await res.json({
+  res.json({
     msg: 'Recipes works!'
   });
 });
 
 //Test users endpoint
 router.get('/users/test', async (req, res) => {
-  await res.json({
+  res.json({
     msg: 'Users works!'
   });
 });
@@ -159,6 +159,33 @@ router.post(
     });
     newRecipe.save();
     res.json(newRecipe);
+  }
+);
+
+//Update Recipe
+router.post(
+  '/recipes/update/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const { errors, isValid } = validateRecipeInput(req.body);
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      const recipe = await Recipe.findOne({ _id: req.params.id });
+      if (!recipe.user.equals(req.user._id)) {
+        res.status(404).json({ nomatch: 'error' });
+      }
+      const updatedRecipe = await Recipe.findOneAndUpdate(
+        { _id: req.params.id },
+        req.body,
+        { upsert: true, new: true }
+      ).exec();
+      res.json(updatedRecipe);
+    } catch (err) {
+      res.status(404).json({ recipenotfound: 'Recipe not found' });
+    }
   }
 );
 
