@@ -14,6 +14,9 @@ const recipeSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  image: {
+    type: String
+  },
   slug: String,
   category: {
     type: String

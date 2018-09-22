@@ -16,6 +16,9 @@ const validateRegisterInput = require('./../validation/register');
 const validateLoginInput = require('./../validation/login');
 const validateRecipeInput = require('./../validation/recipe');
 
+//Load Image Controller
+const imageController = require('./../config/imageController');
+
 //Test recipes endpoint
 router.get('/recipes/test', async (req, res) => {
   res.json({
@@ -140,10 +143,25 @@ router.get('/recipes/id/:id', async (req, res) => {
   }
 });
 
+//Test upload
+router.post(
+  '/upload',
+  imageController.upload,
+  imageController.resize,
+  (req, res) => {
+    if (req.fileValidationError) {
+      res.json(req.fileValidationError);
+    }
+    res.json(req.body);
+  }
+);
+
 //Create Recipe
 router.post(
   '/recipes',
   passport.authenticate('jwt', { session: false }),
+  imageController.upload,
+  imageController.resize,
   (req, res) => {
     const { errors, isValid } = validateRecipeInput(req.body);
 
@@ -151,9 +169,13 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
+    if (req.fileValidationError) {
+      return res.status(400).json(req.fileValidationError);
+    }
     const newRecipe = new Recipe({
       name: req.body.name,
       ingredients: req.body.ingredients,
+      image: req.body.image,
       directions: req.body.directions,
       user: req.user.id
     });
@@ -183,6 +205,24 @@ router.post(
         { upsert: true, new: true }
       ).exec();
       res.json(updatedRecipe);
+    } catch (err) {
+      res.status(404).json({ recipenotfound: 'Recipe not found' });
+    }
+  }
+);
+
+//Delete Recipe
+router.delete(
+  '/recipes/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const recipe = await Recipe.findOne({ _id: req.params.id });
+      if (!recipe.user.equals(req.user._id)) {
+        res.status(404).json({ nomatch: 'error' });
+      }
+      recipe.remove();
+      res.json({ success: true });
     } catch (err) {
       res.status(404).json({ recipenotfound: 'Recipe not found' });
     }
