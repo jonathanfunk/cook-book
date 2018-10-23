@@ -1,11 +1,9 @@
 @charset "utf-8";
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-
-// Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,700');
 
 // Set your brand colors
+$orange: #f96332;
 $purple: #8a4d76;
 $pink: #fa7c91;
 $brown: #757763;
@@ -13,13 +11,21 @@ $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
-$family-sans-serif: 'Nunito', sans-serif;
+$family-sans-serif: 'Poppins', sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
-$primary: $purple;
+$primary: $orange;
 $link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+$control-radius: 25px;
+
+// Update Navigation Styles
+$navbar-height: 6rem;
+
+//Button Styles
+$button-padding-vertical: 1em;
+$button-padding-horizontal: 2.5em;
 
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
