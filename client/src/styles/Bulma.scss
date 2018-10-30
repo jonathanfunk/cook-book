@@ -16,16 +16,14 @@ $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $orange;
 $link: $pink;
-$widescreen-enabled: false;
-$fullhd-enabled: false;
 $control-radius: 25px;
 
 // Update Navigation Styles
 $navbar-height: 6rem;
 
 //Button Styles
-$button-padding-vertical: 1em;
-$button-padding-horizontal: 2.5em;
+// $button-padding-vertical: 1em;
+// $button-padding-horizontal: 2.5em;
 
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
@@ -35,10 +33,10 @@ $input-shadow: none;
 
 @import '~bulma/sass/utilities/_all.sass';
 @import '~bulma/sass/base/_all.sass';
+@import '~bulma/sass/layout/_all.sass';
+@import '~bulma/sass/grid/_all.sass';
 @import '~bulma/sass/elements/button.sass';
 @import '~bulma/sass/elements/container.sass';
 @import '~bulma/sass/elements/form.sass';
 @import '~bulma/sass/elements/title.sass';
 @import '~bulma/sass/components/navbar.sass';
-@import '~bulma/sass/layout/hero.sass';
-@import '~bulma/sass/layout/section.sass';

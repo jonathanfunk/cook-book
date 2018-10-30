@@ -20,7 +20,7 @@ class Navigation extends Component {
       >
         <div className="navbar-brand">
           <a href="#" className="navbar-item" href="https://bulma.io">
-            <h1 className="title has-text-white">Cook Book</h1>
+            <span className="title has-text-white">Cook Book</span>
           </a>
           <button
             className={classnames('navbar-burger burger', {
