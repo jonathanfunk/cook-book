@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Landing extends Component {
   render() {
@@ -9,14 +10,14 @@ class Landing extends Component {
             <h1 className="title has-text-white">Getting Peckish?</h1>
             <div className="field is-grouped">
               <p className="control">
-                <a href="#" className="button is-medium is-primary">
+                <Link to="/recipes" className="button is-medium is-primary">
                   Find Recipes
-                </a>
+                </Link>
               </p>
               <p className="control">
-                <a href="" className="button is-medium is-light">
+                <Link to="/sign-up" className="button is-medium is-light">
                   Sign Up
-                </a>
+                </Link>
               </p>
             </div>
           </div>

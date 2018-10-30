@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
 class Navigation extends Component {
@@ -19,9 +20,9 @@ class Navigation extends Component {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <a href="#" className="navbar-item" href="https://bulma.io">
+          <Link to="/" className="navbar-item">
             <span className="title has-text-white">Cook Book</span>
-          </a>
+          </Link>
           <button
             className={classnames('navbar-burger burger', {
               'is-active': this.state.isActive
@@ -42,25 +43,25 @@ class Navigation extends Component {
           })}
         >
           <div className="navbar-start">
-            <a href="#" className="navbar-item">
+            <Link to="/" className="navbar-item">
               Home
-            </a>
-            <a href="#" className="navbar-item">
+            </Link>
+            <Link to="/recipes" className="navbar-item">
               Recipes
-            </a>
-            <a href="#" className="navbar-item">
+            </Link>
+            <Link to="create-recipe" className="navbar-item">
               Create Recipe
-            </a>
+            </Link>
           </div>
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <a href="#" className="button is-light">
+                <Link to="/sign-up" className="button is-light">
                   Sign up
-                </a>
-                <a href="#" className="button is-primary">
-                  Log in
-                </a>
+                </Link>
+                <Link to="/login" className="button is-primary">
+                  Login
+                </Link>
               </div>
             </div>
           </div>
