@@ -16,20 +16,15 @@ $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $orange;
 $link: $pink;
-$control-radius: 25px;
 
 // Update Navigation Styles
 $navbar-height: 6rem;
 
-//Button Styles
-// $button-padding-vertical: 1em;
-// $button-padding-horizontal: 2.5em;
-
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
 $control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+//$input-border-color: transparent;
+//$input-shadow: none;
 
 @import '~bulma/sass/utilities/_all.sass';
 @import '~bulma/sass/base/_all.sass';
@@ -38,5 +33,9 @@ $input-shadow: none;
 @import '~bulma/sass/elements/button.sass';
 @import '~bulma/sass/elements/container.sass';
 @import '~bulma/sass/elements/form.sass';
+@import '~bulma/sass/elements/icon.sass';
+@import '~bulma/sass/elements/image.sass';
 @import '~bulma/sass/elements/title.sass';
+@import '~bulma/sass/elements/box.sass';
 @import '~bulma/sass/components/navbar.sass';
+@import '~bulma/sass/components/card.sass';
