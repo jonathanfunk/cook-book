@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import InputGroup from '../Components/InputFields/InputGroup';
+import { connect } from 'react-redux';
+import { loginUser } from './../redux/actions/authActions';
+import InputGroup from '../components/InputFields/InputGroup';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
@@ -8,6 +10,12 @@ class Login extends Component {
     password: '',
     errors: {}
   };
+
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.errors) {
+      return { errors: nextProps.errors };
+    }
+  }
 
   onChange = e =>
     this.setState({
@@ -21,12 +29,14 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    console.log('User data is...', userData);
+    this.props.loginUser(userData);
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
-      <section className="hero is-fullheight">
+      <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container has-text-centered">
             <div className="column is-4 is-offset-4">
@@ -40,6 +50,7 @@ class Login extends Component {
                   value={this.state.email}
                   onChange={this.onChange}
                   icon="fa fa-envelope"
+                  error={errors.email}
                 />
                 <InputGroup
                   type="password"
@@ -48,6 +59,7 @@ class Login extends Component {
                   value={this.state.password}
                   onChange={this.onChange}
                   icon="fa fa-lock"
+                  error={errors.password}
                 />
                 <div className="field">
                   <button className="button is-block is-primary is-large is-fullwidth">
@@ -66,4 +78,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

@@ -1,6 +1,14 @@
 import React from 'react';
 
-const InputGroup = ({ type, name, placeholder, value, icon, onChange }) => {
+const InputGroup = ({
+  type,
+  name,
+  placeholder,
+  value,
+  icon,
+  onChange,
+  error
+}) => {
   return (
     <div className="field">
       <div className="control has-icons-left">
@@ -16,6 +24,7 @@ const InputGroup = ({ type, name, placeholder, value, icon, onChange }) => {
           <i className={icon} />
         </span>
       </div>
+      {error && <p class="help is-danger">{error}</p>}
     </div>
   );
 };
