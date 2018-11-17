@@ -3,7 +3,25 @@ import setAuthToken from './../../helpers/setAuthToken';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 import jwt_decode from 'jwt-decode';
 
-//Login - Get user token
+//Register User
+export const signUpUser = userData => async dispatch => {
+  try {
+    await axios.post('/api/users/register', userData);
+    const { email, password } = userData;
+    const loginData = {
+      email,
+      password
+    };
+    dispatch(loginUser(loginData));
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+//Login
 export const loginUser = userData => async dispatch => {
   try {
     const results = await axios.post('/api/users/login', userData);
