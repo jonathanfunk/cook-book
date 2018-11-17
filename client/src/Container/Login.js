@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from './../redux/actions/authActions';
 import InputGroup from '../components/InputFields/InputGroup';
-import { Link } from 'react-router-dom';
+import LoggedIn from './../components/LoggedIn';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
-    errors: {}
+    errors: {},
+    userName: ''
   };
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.setState({ userName: this.props.auth.user.name });
+    }
+  }
+
   static getDerivedStateFromProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      return { userName: nextProps.auth.user.name };
+    }
     if (nextProps.errors) {
       return { errors: nextProps.errors };
     }
@@ -39,38 +50,44 @@ class Login extends Component {
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container has-text-centered">
-            <div className="column is-4 is-offset-4">
-              <h3 className="title has-text-grey">Login</h3>
-              <p className="subtitle has-text-grey">Please login to proceed.</p>
-              <form className="box" onSubmit={this.onSubmit}>
-                <InputGroup
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  icon="fa fa-envelope"
-                  error={errors.email}
-                />
-                <InputGroup
-                  type="password"
-                  name="password"
-                  placeholder="Your Password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  icon="fa fa-lock"
-                  error={errors.password}
-                />
-                <div className="field">
-                  <button className="button is-block is-primary is-large is-fullwidth">
-                    Login
-                  </button>
-                </div>
-              </form>
-              <p className="has-text-grey">
-                <Link to="/sign-up">Sign Up</Link>
-              </p>
-            </div>
+            {this.state.userName ? (
+              <LoggedIn userName={this.state.userName} />
+            ) : (
+              <div className="column is-4 is-offset-4">
+                <h3 className="title has-text-grey">Login</h3>
+                <p className="subtitle has-text-grey">
+                  Please login to proceed.
+                </p>
+                <form className="box" onSubmit={this.onSubmit}>
+                  <InputGroup
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    icon="fa fa-envelope"
+                    error={errors.email}
+                  />
+                  <InputGroup
+                    type="password"
+                    name="password"
+                    placeholder="Your Password"
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    icon="fa fa-lock"
+                    error={errors.password}
+                  />
+                  <div className="field">
+                    <button className="button is-block is-primary is-large is-fullwidth">
+                      Login
+                    </button>
+                  </div>
+                </form>
+                <p className="has-text-grey">
+                  <Link to="/sign-up">Sign Up</Link>
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
