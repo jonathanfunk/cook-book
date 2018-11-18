@@ -26,6 +26,9 @@ class Login extends Component {
     if (nextProps.errors) {
       return { errors: nextProps.errors };
     }
+    if (!nextProps.auth.isAuthenticated) {
+      return { userName: '' };
+    }
   }
 
   onChange = e =>

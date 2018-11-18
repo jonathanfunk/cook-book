@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAuthToken from './../../helpers/setAuthToken';
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER } from './types';
 import jwt_decode from 'jwt-decode';
 
 //Register User
@@ -33,6 +33,8 @@ export const loginUser = userData => async dispatch => {
     setAuthToken(token);
     //Decode token to get user data
     const decoded = jwt_decode(token);
+    //Cear out any errors
+    dispatch(clearErrors());
     //Set current user
     dispatch(setCurrentUser(decoded));
   } catch (err) {
@@ -59,4 +61,11 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   //Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+};
+
+//Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };
