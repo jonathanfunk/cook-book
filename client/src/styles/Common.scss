@@ -6,3 +6,10 @@
     flex: 1 0 auto;
   }
 }
+
+.navbar-item {
+  img {
+    max-height: 3rem;
+    border-radius: 25px;
+  }
+}

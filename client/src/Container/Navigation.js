@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutUser } from './../redux/actions/authActions';
 import classnames from 'classnames';
 
 class Navigation extends Component {
@@ -12,7 +14,45 @@ class Navigation extends Component {
     const currentState = this.state.isActive;
     this.setState({ isActive: !currentState });
   };
+
+  logoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const loggedOutNavItems = (
+      <div className="navbar-end">
+        <div className="navbar-item">
+          <div className="buttons">
+            <Link to="/sign-up" className="button is-light">
+              Sign up
+            </Link>
+            <Link to="/login" className="button is-primary">
+              Login
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+
+    const loggedInNavItems = (
+      <div className="navbar-end">
+        <div className="navbar-item">
+          <img src={user.avatar} alt={user.name} />
+        </div>
+        <div className="navbar-item">
+          <div className="buttons">
+            <button onClick={this.logoutClick} className="button is-primary">
+              Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+
     return (
       <nav
         className="navbar is-primary"
@@ -53,22 +93,18 @@ class Navigation extends Component {
               Create Recipe
             </Link>
           </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <Link to="/sign-up" className="button is-light">
-                  Sign up
-                </Link>
-                <Link to="/login" className="button is-primary">
-                  Login
-                </Link>
-              </div>
-            </div>
-          </div>
+          {isAuthenticated ? loggedInNavItems : loggedOutNavItems}
         </div>
       </nav>
     );
   }
 }
 
-export default Navigation;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navigation);

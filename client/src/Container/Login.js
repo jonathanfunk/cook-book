@@ -46,6 +46,41 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
 
+    const loginForm = (
+      <div className="column is-4 is-offset-4">
+        <h3 className="title has-text-grey">Login</h3>
+        <p className="subtitle has-text-grey">Please login to proceed.</p>
+        <form className="box" onSubmit={this.onSubmit}>
+          <InputGroup
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={this.state.email}
+            onChange={this.onChange}
+            icon="fa fa-envelope"
+            error={errors.email}
+          />
+          <InputGroup
+            type="password"
+            name="password"
+            placeholder="Your Password"
+            value={this.state.password}
+            onChange={this.onChange}
+            icon="fa fa-lock"
+            error={errors.password}
+          />
+          <div className="field">
+            <button className="button is-block is-primary is-large is-fullwidth">
+              Login
+            </button>
+          </div>
+        </form>
+        <p className="has-text-grey">
+          <Link to="/sign-up">Sign Up</Link>
+        </p>
+      </div>
+    );
+
     return (
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
@@ -53,40 +88,7 @@ class Login extends Component {
             {this.state.userName ? (
               <LoggedIn userName={this.state.userName} />
             ) : (
-              <div className="column is-4 is-offset-4">
-                <h3 className="title has-text-grey">Login</h3>
-                <p className="subtitle has-text-grey">
-                  Please login to proceed.
-                </p>
-                <form className="box" onSubmit={this.onSubmit}>
-                  <InputGroup
-                    type="email"
-                    name="email"
-                    placeholder="Your Email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    icon="fa fa-envelope"
-                    error={errors.email}
-                  />
-                  <InputGroup
-                    type="password"
-                    name="password"
-                    placeholder="Your Password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                    icon="fa fa-lock"
-                    error={errors.password}
-                  />
-                  <div className="field">
-                    <button className="button is-block is-primary is-large is-fullwidth">
-                      Login
-                    </button>
-                  </div>
-                </form>
-                <p className="has-text-grey">
-                  <Link to="/sign-up">Sign Up</Link>
-                </p>
-              </div>
+              loginForm
             )}
           </div>
         </div>
