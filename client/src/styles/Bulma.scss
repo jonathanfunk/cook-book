@@ -26,6 +26,7 @@ $control-border-width: 2px;
 //$input-border-color: transparent;
 //$input-shadow: none;
 
+@import 'Checkbox';
 @import '~bulma/sass/utilities/_all.sass';
 @import '~bulma/sass/base/_all.sass';
 @import '~bulma/sass/layout/_all.sass';

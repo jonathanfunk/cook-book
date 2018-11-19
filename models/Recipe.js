@@ -19,7 +19,7 @@ const recipeSchema = new Schema({
   },
   slug: String,
   category: {
-    type: String
+    type: [String]
   },
   ingredients: {
     type: [String]
