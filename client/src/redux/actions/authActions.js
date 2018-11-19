@@ -13,6 +13,8 @@ export const signUpUser = userData => async dispatch => {
       password
     };
     dispatch(loginUser(loginData));
+    //Cear out any errors
+    dispatch(clearErrors());
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

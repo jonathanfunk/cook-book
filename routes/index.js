@@ -182,6 +182,7 @@ router.post(
     }
     const newRecipe = new Recipe({
       name: req.body.name,
+      category: req.body.category,
       ingredients: req.body.ingredients,
       image: req.body.image,
       directions: req.body.directions,

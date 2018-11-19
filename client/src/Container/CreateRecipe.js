@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import InputGroup from './../components/InputFields/InputGroup';
 import Checkbox from './../components/InputFields/Checkbox';
 import IngredientField from './../components/InputFields/IngredientField';
 import TextArea from './../components/InputFields/TextArea';
 import categories from './../helpers/categories';
+import { createRecipe } from './../redux/actions/recipeActions';
 
 class CreateRecipe extends Component {
   state = {
@@ -39,19 +41,23 @@ class CreateRecipe extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('onSubmit Called');
 
     const category = Array.from(this.state.category).map(
       category => category[0]
     );
 
+    const ingredients = this.state.ingredients.map(
+      ingredient => ingredient.item
+    );
+
     const recipeData = {
       name: this.state.name,
-      category: category,
-      ingredients: this.state.ingredients,
+      category,
+      ingredients,
       directions: this.state.directions
     };
     console.log(recipeData);
+    this.props.createRecipe(recipeData);
   };
 
   addIngredient = () => {
@@ -146,4 +152,12 @@ class CreateRecipe extends Component {
   }
 }
 
-export default CreateRecipe;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { createRecipe }
+)(CreateRecipe);
