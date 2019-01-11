@@ -46,7 +46,11 @@ class CreateRecipe extends Component {
       category => category[0]
     );
 
-    const ingredients = this.state.ingredients.map(
+    const removeEmptyIngredients = this.state.ingredients.filter(
+      ingredient => ingredient.item
+    );
+    console.log('Filtered Ingredients', removeEmptyIngredients);
+    const ingredients = removeEmptyIngredients.map(
       ingredient => ingredient.item
     );
 
