@@ -10,6 +10,7 @@ import { createRecipe } from './../redux/actions/recipeActions';
 class CreateRecipe extends Component {
   state = {
     name: '',
+    image: null,
     category: new Map(),
     ingredients: [{ item: '' }],
     direction: '',
@@ -19,6 +20,11 @@ class CreateRecipe extends Component {
   onChange = e =>
     this.setState({
       [e.target.name]: e.target.value
+    });
+
+  imageChange = e =>
+    this.setState({
+      image: e.target.files[0]
     });
 
   categoryChange = e => {
@@ -49,19 +55,20 @@ class CreateRecipe extends Component {
     const removeEmptyIngredients = this.state.ingredients.filter(
       ingredient => ingredient.item
     );
-    console.log('Filtered Ingredients', removeEmptyIngredients);
     const ingredients = removeEmptyIngredients.map(
       ingredient => ingredient.item
     );
 
+    const imageData = this.state.image;
+
     const recipeData = {
       name: this.state.name,
+      //image: this.state.image,
       category,
       ingredients,
       directions: this.state.directions
     };
-    console.log(recipeData);
-    this.props.createRecipe(recipeData);
+    this.props.createRecipe(recipeData, imageData);
   };
 
   addIngredient = () => {
@@ -94,7 +101,15 @@ class CreateRecipe extends Component {
                   placeholder="Name of your recipe"
                   value={this.state.name}
                   onChange={this.onChange}
-                  icon="fa fa-lock"
+                  icon="fa fa-food"
+                />
+                <label className="label is-medium">Image</label>
+                <InputGroup
+                  type="file"
+                  name="image"
+                  placeholder="Upload Image"
+                  onChange={this.imageChange}
+                  icon="fa fa-file-image"
                 />
                 <label className="label is-medium">Category</label>
                 <div className="field">

@@ -26,7 +26,7 @@ const InputGroup = ({
           onClick={removeIngredient}
           className="button is-danger is-large"
         >
-          <i class="fas fa-trash-alt" />
+          <i className="fas fa-trash-alt" />
         </button>
       </div>
       {error && <p className="help is-danger">{error}</p>}
