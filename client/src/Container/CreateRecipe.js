@@ -4,6 +4,7 @@ import InputGroup from './../components/InputFields/InputGroup';
 import Checkbox from './../components/InputFields/Checkbox';
 import IngredientField from './../components/InputFields/IngredientField';
 import TextArea from './../components/InputFields/TextArea';
+import Message from '../components/Message';
 import categories from './../helpers/categories';
 import { createRecipe } from './../redux/actions/recipeActions';
 
@@ -14,8 +15,15 @@ class CreateRecipe extends Component {
     category: new Map(),
     ingredients: [{ item: '' }],
     direction: '',
-    errors: {}
+    errors: {},
+    userName: ''
   };
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.setState({ userName: this.props.auth.user.name });
+    }
+  }
 
   onChange = e =>
     this.setState({
@@ -86,84 +94,96 @@ class CreateRecipe extends Component {
   };
 
   render() {
+    const createRecipeForm = (
+      <div className="column is-8 is-offset-2">
+        <h3 className="title has-text-grey">Create Recipe</h3>
+        <p className="subtitle has-text-grey">Let's see what you got.</p>
+        <form className="box" onSubmit={this.onSubmit}>
+          <label className="label is-medium">Name</label>
+          <InputGroup
+            type="text"
+            name="name"
+            placeholder="Name of your recipe"
+            value={this.state.name}
+            onChange={this.onChange}
+            icon="fa fa-food"
+          />
+          <label className="label is-medium">Image</label>
+          <InputGroup
+            type="file"
+            name="image"
+            placeholder="Upload Image"
+            onChange={this.imageChange}
+            icon="fa fa-file-image"
+          />
+          <label className="label is-medium">Category</label>
+          <div className="field">
+            {categories.map(item => (
+              <div
+                className="b-checkbox is-circular is-primary is-inline"
+                key={item.key}
+              >
+                <Checkbox
+                  name={item.name}
+                  checked={this.state.category.get(item.name)}
+                  onChange={this.categoryChange}
+                />
+                <label htmlFor={item.name}>{item.label}</label>
+              </div>
+            ))}
+          </div>
+          <label className="label is-medium">Ingredients</label>
+          {this.state.ingredients.map((ingredient, id) => (
+            <IngredientField
+              key={id}
+              type="text"
+              name="name"
+              value={ingredient.item}
+              onChange={this.ingredientNameChange(id)}
+              removeIngredient={this.removeIngredient(id)}
+            />
+          ))}
+          <div className="field">
+            <button
+              type="button"
+              onClick={this.addIngredient}
+              className="button is-info is-medium is-fullwidth"
+            >
+              + Add ingredient
+            </button>
+          </div>
+          <label className="label is-medium">Directions</label>
+          <TextArea
+            name="directions"
+            placeholder="Directions"
+            value={this.state.directions}
+            onChange={this.onChange}
+          />
+          <div className="field">
+            <button
+              type="submit"
+              className="button is-block is-primary is-large is-fullwidth"
+            >
+              Add Recipe
+            </button>
+          </div>
+        </form>
+      </div>
+    );
     return (
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container has-text-centered">
-            <div className="column is-8 is-offset-2">
-              <h3 className="title has-text-grey">Create Recipe</h3>
-              <p className="subtitle has-text-grey">Let's see what you got.</p>
-              <form className="box" onSubmit={this.onSubmit}>
-                <label className="label is-medium">Name</label>
-                <InputGroup
-                  type="text"
-                  name="name"
-                  placeholder="Name of your recipe"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  icon="fa fa-food"
-                />
-                <label className="label is-medium">Image</label>
-                <InputGroup
-                  type="file"
-                  name="image"
-                  placeholder="Upload Image"
-                  onChange={this.imageChange}
-                  icon="fa fa-file-image"
-                />
-                <label className="label is-medium">Category</label>
-                <div className="field">
-                  {categories.map(item => (
-                    <div
-                      className="b-checkbox is-circular is-primary is-inline"
-                      key={item.key}
-                    >
-                      <Checkbox
-                        name={item.name}
-                        checked={this.state.category.get(item.name)}
-                        onChange={this.categoryChange}
-                      />
-                      <label htmlFor={item.name}>{item.label}</label>
-                    </div>
-                  ))}
-                </div>
-                <label className="label is-medium">Ingredients</label>
-                {this.state.ingredients.map((ingredient, id) => (
-                  <IngredientField
-                    key={id}
-                    type="text"
-                    name="name"
-                    value={ingredient.item}
-                    onChange={this.ingredientNameChange(id)}
-                    removeIngredient={this.removeIngredient(id)}
-                  />
-                ))}
-                <div className="field">
-                  <button
-                    type="button"
-                    onClick={this.addIngredient}
-                    className="button is-info is-medium is-fullwidth"
-                  >
-                    + Add ingredient
-                  </button>
-                </div>
-                <label className="label is-medium">Directions</label>
-                <TextArea
-                  name="directions"
-                  placeholder="Directions"
-                  value={this.state.directions}
-                  onChange={this.onChange}
-                />
-                <div className="field">
-                  <button
-                    type="submit"
-                    className="button is-block is-primary is-large is-fullwidth"
-                  >
-                    Add Recipe
-                  </button>
-                </div>
-              </form>
-            </div>
+            {this.state.userName ? (
+              createRecipeForm
+            ) : (
+              <Message
+                title="You must be logged in to create a recipe!"
+                subtitle="Sign up and let's see what you got"
+                linkURL="/sign-up"
+                linkText="Sign Up"
+              />
+            )}
           </div>
         </div>
       </section>
