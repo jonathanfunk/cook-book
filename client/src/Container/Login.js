@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from './../redux/actions/authActions';
 import InputGroup from '../components/InputFields/InputGroup';
-import LoggedIn from './../components/LoggedIn';
+import Message from '../components/Message';
 
 class Login extends Component {
   state = {
@@ -89,7 +89,12 @@ class Login extends Component {
         <div className="hero-body">
           <div className="container has-text-centered">
             {this.state.userName ? (
-              <LoggedIn userName={this.state.userName} />
+              <Message
+                title={`Hi ${this.state.userName}!`}
+                subtitle="You are logged in."
+                linkURL="/create-recipe"
+                linkText="Create Recipe"
+              />
             ) : (
               loginForm
             )}
