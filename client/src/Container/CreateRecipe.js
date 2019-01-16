@@ -14,14 +14,14 @@ class CreateRecipe extends Component {
     image: null,
     category: new Map(),
     ingredients: [{ item: '' }],
-    direction: '',
+    directions: '',
     errors: {},
     userName: ''
   };
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.setState({ userName: this.props.auth.user.name });
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.errors) {
+      return { errors: nextProps.errors };
     }
   }
 
@@ -71,7 +71,6 @@ class CreateRecipe extends Component {
 
     const recipeData = {
       name: this.state.name,
-      //image: this.state.image,
       category,
       ingredients,
       directions: this.state.directions
@@ -94,6 +93,9 @@ class CreateRecipe extends Component {
   };
 
   render() {
+    const { errors, name, category, ingredients, directions } = this.state;
+    const { isAuthenticated } = this.props.auth;
+
     const createRecipeForm = (
       <div className="column is-8 is-offset-2">
         <h3 className="title has-text-grey">Create Recipe</h3>
@@ -104,9 +106,10 @@ class CreateRecipe extends Component {
             type="text"
             name="name"
             placeholder="Name of your recipe"
-            value={this.state.name}
+            value={name}
             onChange={this.onChange}
             icon="fa fa-food"
+            error={errors.name}
           />
           <label className="label is-medium">Image</label>
           <InputGroup
@@ -125,7 +128,7 @@ class CreateRecipe extends Component {
               >
                 <Checkbox
                   name={item.name}
-                  checked={this.state.category.get(item.name)}
+                  checked={category.get(item.name)}
                   onChange={this.categoryChange}
                 />
                 <label htmlFor={item.name}>{item.label}</label>
@@ -133,7 +136,10 @@ class CreateRecipe extends Component {
             ))}
           </div>
           <label className="label is-medium">Ingredients</label>
-          {this.state.ingredients.map((ingredient, id) => (
+          {errors.ingredients && (
+            <p class="help is-danger">{errors.ingredients}</p>
+          )}
+          {ingredients.map((ingredient, id) => (
             <IngredientField
               key={id}
               type="text"
@@ -156,8 +162,9 @@ class CreateRecipe extends Component {
           <TextArea
             name="directions"
             placeholder="Directions"
-            value={this.state.directions}
+            value={directions}
             onChange={this.onChange}
+            error={errors.directions}
           />
           <div className="field">
             <button
@@ -174,7 +181,7 @@ class CreateRecipe extends Component {
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container has-text-centered">
-            {this.state.userName ? (
+            {isAuthenticated ? (
               createRecipeForm
             ) : (
               <Message

@@ -15,8 +15,8 @@ class Landing extends Component {
                 </Link>
               </p>
               <p className="control">
-                <Link to="/sign-up" className="button is-medium is-light">
-                  Sign Up
+                <Link to="/create-recipe" className="button is-medium is-light">
+                  Create Recipe
                 </Link>
               </p>
             </div>

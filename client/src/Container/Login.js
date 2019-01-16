@@ -9,25 +9,12 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    errors: {},
-    userName: ''
+    errors: {}
   };
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.setState({ userName: this.props.auth.user.name });
-    }
-  }
-
   static getDerivedStateFromProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      return { userName: nextProps.auth.user.name };
-    }
     if (nextProps.errors) {
       return { errors: nextProps.errors };
-    }
-    if (!nextProps.auth.isAuthenticated) {
-      return { userName: '' };
     }
   }
 
@@ -48,6 +35,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    const { isAuthenticated, user } = this.props.auth;
 
     const loginForm = (
       <div className="column is-4 is-offset-4">
@@ -88,9 +76,9 @@ class Login extends Component {
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container has-text-centered">
-            {this.state.userName ? (
+            {isAuthenticated ? (
               <Message
-                title={`Hi ${this.state.userName}!`}
+                title={`Hi ${user.name}!`}
                 subtitle="You are logged in."
                 linkURL="/create-recipe"
                 linkText="Create Recipe"
