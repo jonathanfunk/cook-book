@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, CLEAR_ERRORS } from './types';
+import { GET_ERRORS, CLEAR_ERRORS, LOADING, GET_RECIPE } from './types';
 
 //Create Recipe
 export const createRecipe = (
@@ -28,9 +28,33 @@ export const createRecipe = (
   }
 };
 
+//Get Recipe by Slug
+export const getRecipeBySlug = slug => async dispatch => {
+  try {
+    dispatch(loading());
+    const recipe = await axios.get(`/api/recipes/slug/${slug}`);
+    dispatch({
+      type: GET_RECIPE,
+      payload: recipe.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_RECIPE,
+      payload: null
+    });
+  }
+};
+
 //Clear errors
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
+  };
+};
+
+//Loading
+export const loading = () => {
+  return {
+    type: LOADING
   };
 };
