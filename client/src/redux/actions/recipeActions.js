@@ -2,9 +2,13 @@ import axios from 'axios';
 import { GET_ERRORS, CLEAR_ERRORS } from './types';
 
 //Create Recipe
-export const createRecipe = (recipeData, imageData) => async dispatch => {
+export const createRecipe = (
+  recipeData,
+  imageData,
+  history
+) => async dispatch => {
   try {
-    const { name, category, ingredients, directions } = recipeData;
+    const { name, slug, category, ingredients, directions } = recipeData;
     const formData = new FormData();
     formData.append('name', name);
     formData.append('recipe-image', imageData);
@@ -13,6 +17,7 @@ export const createRecipe = (recipeData, imageData) => async dispatch => {
     formData.append('directions', directions);
 
     await axios.post('/api/recipes', formData);
+    await history.push(`/recipe/${slug}`);
     //Cear out any errors
     dispatch(clearErrors());
   } catch (err) {

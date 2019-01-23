@@ -7,6 +7,7 @@ import TextArea from './../components/InputFields/TextArea';
 import Message from '../components/Message';
 import categories from './../helpers/categories';
 import { createRecipe } from './../redux/actions/recipeActions';
+import slugify from 'slugify';
 
 class CreateRecipe extends Component {
   state = {
@@ -71,11 +72,15 @@ class CreateRecipe extends Component {
 
     const recipeData = {
       name: this.state.name,
+      slug: slugify(this.state.name, {
+        lower: true
+      }),
       category,
       ingredients,
       directions: this.state.directions
     };
-    this.props.createRecipe(recipeData, imageData);
+    console.log(recipeData);
+    this.props.createRecipe(recipeData, imageData, this.props.history);
   };
 
   addIngredient = () => {
