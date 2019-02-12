@@ -191,9 +191,9 @@ class CreateRecipe extends Component {
             ) : (
               <Message
                 title="You must be logged in to create a recipe!"
-                subtitle="Sign up and let's see what you got"
-                linkURL="/sign-up"
-                linkText="Sign Up"
+                subtitle="Login and let's see what you got"
+                linkURL="/login"
+                linkText="Login"
               />
             )}
           </div>

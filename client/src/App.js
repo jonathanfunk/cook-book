@@ -43,11 +43,11 @@ class App extends Component {
             <Navigation />
             <Switch>
               <Route exact path="/" component={Landing} />
-              <Route exact path="/recipes" component={Recipes} />
-              <Route exact path="/create-recipe" component={CreateRecipe} />
-              <Route exact path="/sign-up" component={SignUp} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/recipe/:slug" component={Recipe} />
+              <Route path="/recipes" component={Recipes} />
+              <Route path="/create-recipe" component={CreateRecipe} />
+              <Route path="/sign-up" component={SignUp} />
+              <Route path="/login" component={Login} />
+              <Route path="/recipe/:slug" component={Recipe} />
             </Switch>
           </div>
         </Router>

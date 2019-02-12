@@ -89,7 +89,7 @@ class Navigation extends Component {
             <Link to="/recipes" className="navbar-item">
               Recipes
             </Link>
-            <Link to="create-recipe" className="navbar-item">
+            <Link to="/create-recipe" className="navbar-item">
               Create Recipe
             </Link>
           </div>
