@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import { loginUser } from './../redux/actions/authActions';
 import InputGroup from '../components/InputFields/InputGroup';
 import Message from '../components/Message';
@@ -36,6 +37,7 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     const { isAuthenticated, user } = this.props.auth;
+    const { requestSent } = this.props.requesting;
 
     const loginForm = (
       <div className="column is-4 is-offset-4">
@@ -61,7 +63,15 @@ class Login extends Component {
             error={errors.password}
           />
           <div className="field">
-            <button className="button is-block is-primary is-large is-fullwidth">
+            <button
+              type="submit"
+              className={classnames(
+                'button is-block is-primary is-large is-fullwidth',
+                {
+                  'is-loading': requestSent
+                }
+              )}
+            >
               Login
             </button>
           </div>
@@ -95,7 +105,8 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  requesting: state.requesting
 });
 
 export default connect(

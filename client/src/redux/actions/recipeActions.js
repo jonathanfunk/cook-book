@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { GET_ERRORS, CLEAR_ERRORS, LOADING, GET_RECIPE } from './types';
+import {
+  GET_ERRORS,
+  CLEAR_ERRORS,
+  LOADING,
+  GET_RECIPE,
+  REQUEST_SENT,
+  REQUEST_COMPLETE
+} from './types';
 
 //Create Recipe
 export const createRecipe = (
@@ -8,6 +15,8 @@ export const createRecipe = (
   history
 ) => async dispatch => {
   try {
+    //Request sent
+    dispatch(requestSent());
     const { name, slug, category, ingredients, directions } = recipeData;
     const formData = new FormData();
     formData.append('name', name);
@@ -20,7 +29,11 @@ export const createRecipe = (
     await history.push(`/recipe/${slug}`);
     //Cear out any errors
     dispatch(clearErrors());
+    //Request complete
+    dispatch(requestComplete());
   } catch (err) {
+    //Request complete
+    dispatch(requestComplete());
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data
@@ -56,5 +69,19 @@ export const clearErrors = () => {
 export const loading = () => {
   return {
     type: LOADING
+  };
+};
+
+//Request Sent
+export const requestSent = () => {
+  return {
+    type: REQUEST_SENT
+  };
+};
+
+//Request complete
+export const requestComplete = () => {
+  return {
+    type: REQUEST_COMPLETE
   };
 };

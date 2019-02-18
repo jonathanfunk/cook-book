@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRecipeBySlug } from './../redux/actions/recipeActions';
 
@@ -23,14 +23,46 @@ class Recipe extends Component {
         <section className="hero is-fullheight-with-navbar">
           <div className="hero-body">
             <div className="container">
-              <div className="column is-8 is-offset-2 box">
-                <figure className="image is-4by3">
-                  <img
-                    src="https://bulma.io/images/placeholders/1280x960.png"
-                    alt="Placehonlder"
-                  />
-                </figure>
-                <h3 className="title has-text-grey">{recipe.name}</h3>
+              <div className="column is-8 is-offset-2">
+                <div className="card">
+                  <div className="card-image">
+                    <figure className="image is-16by9">
+                      <img
+                        src={
+                          recipe.image
+                            ? `/images/${recipe.image}`
+                            : `/images/landing-hero.jpg`
+                        }
+                        alt={recipe.name}
+                      />
+                    </figure>
+                  </div>
+                  <div className="card-content">
+                    <div className="media">
+                      <h1 className="title">{recipe.name}</h1>
+                      <div class="tags are-medium">
+                        {recipe.category.map((categoryItem, i) => {
+                          return (
+                            <span
+                              key={i}
+                              class="tag is-rounded is-white- is-primary is-medium"
+                            >
+                              {categoryItem}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="content">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                      <a href="#">#css</a> <a href="#">#responsive</a>
+                      <br />
+                      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

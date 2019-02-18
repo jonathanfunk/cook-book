@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import InputGroup from './../components/InputFields/InputGroup';
 import Checkbox from './../components/InputFields/Checkbox';
 import IngredientField from './../components/InputFields/IngredientField';
@@ -100,6 +101,7 @@ class CreateRecipe extends Component {
   render() {
     const { errors, name, category, ingredients, directions } = this.state;
     const { isAuthenticated } = this.props.auth;
+    const { requestSent } = this.props.requesting;
 
     const createRecipeForm = (
       <div className="column is-8 is-offset-2">
@@ -174,7 +176,12 @@ class CreateRecipe extends Component {
           <div className="field">
             <button
               type="submit"
-              className="button is-block is-primary is-large is-fullwidth"
+              className={classnames(
+                'button is-block is-primary is-large is-fullwidth',
+                {
+                  'is-loading': requestSent
+                }
+              )}
             >
               Add Recipe
             </button>
@@ -205,7 +212,8 @@ class CreateRecipe extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  requesting: state.requesting
 });
 
 export default connect(

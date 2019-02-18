@@ -27,6 +27,6 @@ exports.resize = async (req, res, next) => {
   req.body.image = `${uuid.v4()}.${extension}`;
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
-  await photo.write(`./public/uploads/${req.body.image}`);
+  await photo.write(`./client/public/images/${req.body.image}`);
   next();
 };
