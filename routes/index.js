@@ -181,12 +181,14 @@ router.post(
       return res.status(400).json(req.fileValidationError);
     }
     const newRecipe = new Recipe({
+      user: req.user.id,
+      userName: req.user.name,
+      userAvatar: req.user.avatar,
       name: req.body.name,
       category: req.body.category,
       ingredients: req.body.ingredients,
       image: req.body.image,
-      directions: req.body.directions,
-      user: req.user.id
+      directions: req.body.directions
     });
     newRecipe.save();
     res.json(newRecipe);

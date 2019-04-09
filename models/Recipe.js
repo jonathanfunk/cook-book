@@ -7,6 +7,12 @@ const recipeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  userName: {
+    type: String
+  },
+  userAvatar: {
+    type: String
+  },
   name: {
     type: String
   },

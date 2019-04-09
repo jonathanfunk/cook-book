@@ -13,10 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Connect to MongoDB
-mongoose.connect(
-  db,
-  { useNewUrlParser: true }
-);
+mongoose.connect(db, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', err => {
   console.error(err.message);
@@ -25,8 +22,6 @@ mongoose.connection.on('error', err => {
 //Passport middleware - handles logins
 app.use(passport.initialize());
 require('./config/passport')(passport);
-
-//Passport config
 
 //Initialize routes
 app.use('/api', routes);

@@ -6,11 +6,9 @@ const LoggedIn = ({ title, subtitle, linkURL, linkText }) => {
     <div className="column is-4 is-offset-4">
       <h3 className="title has-text-grey">{title}</h3>
       <p className="subtitle has-text-grey">{subtitle}</p>
-      <div className="box has-text-centered">
-        <Link to={linkURL} className="button is-medium is-primary is-centered">
-          {linkText}
-        </Link>
-      </div>
+      <Link to={linkURL} className="button is-medium is-primary is-centered">
+        {linkText}
+      </Link>
     </div>
   );
 };

@@ -52,8 +52,8 @@ export const getRecipeBySlug = slug => async dispatch => {
     });
   } catch (err) {
     dispatch({
-      type: GET_RECIPE,
-      payload: null
+      type: GET_ERRORS,
+      payload: err.response.data
     });
   }
 };

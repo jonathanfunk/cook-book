@@ -115,7 +115,7 @@ class CreateRecipe extends Component {
             placeholder="Name of your recipe"
             value={name}
             onChange={this.onChange}
-            icon="fa fa-food"
+            icon="fa fa-utensils"
             error={errors.name}
           />
           <label className="label is-medium">Image</label>

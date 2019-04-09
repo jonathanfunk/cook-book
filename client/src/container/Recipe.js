@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRecipeBySlug } from './../redux/actions/recipeActions';
+import Message from '../components/Message';
 
 class Recipe extends Component {
   componentDidMount() {
@@ -11,6 +12,9 @@ class Recipe extends Component {
 
   render() {
     const { recipe, loading } = this.props.recipe;
+    const errors = this.props.errors.norecipe;
+    console.log(errors);
+
     let recipeContent;
     if (recipe === null || loading) {
       recipeContent = (
@@ -18,63 +22,95 @@ class Recipe extends Component {
           <span className="title">Loading</span>
         </div>
       );
+    } else if (errors) {
+      recipeContent = (
+        <Message
+          title={`Error!`}
+          subtitle={errors}
+          linkURL="/recipes"
+          linkText="Find other recipes"
+        />
+      );
     } else {
       recipeContent = (
-        <section className="hero is-fullheight-with-navbar">
-          <div className="hero-body">
-            <div className="container">
-              <div className="column is-8 is-offset-2">
-                <div className="card">
-                  <div className="card-image">
-                    <figure className="image is-16by9">
-                      <img
-                        src={
-                          recipe.image
-                            ? `/images/${recipe.image}`
-                            : `/images/landing-hero.jpg`
-                        }
-                        alt={recipe.name}
-                      />
-                    </figure>
-                  </div>
-                  <div className="card-content">
-                    <div className="media">
-                      <h1 className="title">{recipe.name}</h1>
-                      <div class="tags are-medium">
-                        {recipe.category.map((categoryItem, i) => {
-                          return (
-                            <span
-                              key={i}
-                              class="tag is-rounded is-white- is-primary is-medium"
-                            >
-                              {categoryItem}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="content">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                      <a href="#">#css</a> <a href="#">#responsive</a>
-                      <br />
-                      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                    </div>
-                  </div>
+        <div className="column is-8 is-offset-2">
+          <div className="card">
+            <div className="card-image">
+              <figure className="image is-16by9">
+                <img
+                  src={
+                    recipe.image
+                      ? `/images/${recipe.image}`
+                      : `/images/landing-hero.jpg`
+                  }
+                  alt={recipe.name}
+                />
+              </figure>
+            </div>
+            <div className="card-content">
+              <h1 className="title is-size-1">{recipe.name}</h1>
+              <div className="media">
+                <div className="media-left">
+                  <figure className="image is-24x24">
+                    <img
+                      className="is-rounded"
+                      src={recipe.userAvatar}
+                      alt={recipe.userName}
+                    />
+                  </figure>
                 </div>
+                <div className="media-content">
+                  <p className="subtitle is-6">
+                    Posted by {recipe.userName} on {recipe.created}
+                  </p>
+                </div>
+              </div>
+              <div className="content">
+                <div className="tags are-medium">
+                  {recipe.category[0].split(',').map((categoryItem, i) => {
+                    return (
+                      <span
+                        key={i}
+                        className="tag is-rounded is-white- is-primary is-medium"
+                      >
+                        {categoryItem}
+                      </span>
+                    );
+                  })}
+                </div>
+                <h3 className="label is-medium">Ingredients</h3>
+                <table className="table is-striped is-hoverable is-fullwidth">
+                  <tbody>
+                    {recipe.ingredients[0].split(',').map((ingredient, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{ingredient}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <h3 className="label is-medium">Directions</h3>
+                {recipe.directions}
               </div>
             </div>
           </div>
-        </section>
+        </div>
       );
     }
-    return <div>{recipeContent}</div>;
+    return (
+      <section className="hero is-fullheight-with-navbar">
+        <div className="hero-body">
+          <div className="container">{recipeContent} </div>
+        </div>
+      </section>
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  recipe: state.recipe
+  recipe: state.recipe,
+  errors: state.errors
 });
 
 export default connect(
