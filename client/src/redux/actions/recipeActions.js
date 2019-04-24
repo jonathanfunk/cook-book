@@ -4,11 +4,14 @@ import {
   CLEAR_ERRORS,
   LOADING,
   GET_RECIPE,
+  FETCH_RECIPES,
+  CONCAT_RECIPES,
+  DELETE_RECIPE,
   REQUEST_SENT,
   REQUEST_COMPLETE
 } from './types';
 
-//Create Recipe
+//Create recipe
 export const createRecipe = (
   recipeData,
   imageData,
@@ -41,7 +44,7 @@ export const createRecipe = (
   }
 };
 
-//Get Recipe by Slug
+//Get recipe by Slug
 export const getRecipeBySlug = slug => async dispatch => {
   try {
     dispatch(loading());
@@ -49,6 +52,57 @@ export const getRecipeBySlug = slug => async dispatch => {
     dispatch({
       type: GET_RECIPE,
       payload: recipe.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+//Fetch recipes
+export const fetchRecipes = (limit, skip) => async dispatch => {
+  try {
+    dispatch(loading());
+    const recipes = await axios.get(`/api/recipes?skip=${skip}&limit=${limit}`);
+    dispatch({
+      type: FETCH_RECIPES,
+      payload: recipes.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+//Concat Recipes
+export const concatRecipes = (limit, skip) => async dispatch => {
+  console.log('Working?');
+  try {
+    dispatch(loading());
+    const recipes = await axios.get(`/api/recipes?skip=${skip}&limit=${limit}`);
+    dispatch({
+      type: CONCAT_RECIPES,
+      payload: recipes.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+//Delete recipe
+export const deleteRecipe = id => async dispatch => {
+  try {
+    await axios.delete(`api/recipes/${id}`);
+    dispatch({
+      type: DELETE_RECIPE,
+      payload: id
     });
   } catch (err) {
     dispatch({

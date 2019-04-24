@@ -13,7 +13,6 @@ class Recipe extends Component {
   render() {
     const { recipe, loading } = this.props.recipe;
     const errors = this.props.errors.norecipe;
-    console.log(errors);
 
     let recipeContent;
     if (recipe === null || loading) {

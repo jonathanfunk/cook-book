@@ -114,7 +114,11 @@ router.post('/users/login', async (req, res) => {
 //Get Recipes
 router.get('/recipes', async (req, res) => {
   try {
-    const recipe = await Recipe.find(req.body);
+    const skipRecipes = parseInt(req.query.skip) || 0;
+    const limitRecipes = parseInt(req.query.limit) || 0;
+    const recipe = await Recipe.find(req.body)
+      .skip(skipRecipes)
+      .limit(limitRecipes);
     res.json(recipe);
   } catch (err) {
     res.status(404).json({ norecipesfound: 'No recipes found' });
