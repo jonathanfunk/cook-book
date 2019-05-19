@@ -80,7 +80,6 @@ export const fetchRecipes = (limit, skip) => async dispatch => {
 
 //Concat Recipes
 export const concatRecipes = (limit, skip) => async dispatch => {
-  console.log('Working?');
   try {
     dispatch(loading());
     const recipes = await axios.get(`/api/recipes?skip=${skip}&limit=${limit}`);

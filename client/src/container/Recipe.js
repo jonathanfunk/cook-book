@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { getRecipeBySlug } from './../redux/actions/recipeActions';
 import Message from '../components/Message';
+
+const dateCreated = date => moment(date).format('LL');
 
 class Recipe extends Component {
   componentDidMount() {
@@ -9,7 +12,6 @@ class Recipe extends Component {
       this.props.getRecipeBySlug(this.props.match.params.slug);
     }
   }
-
   render() {
     const { recipe, loading } = this.props.recipe;
     const errors = this.props.errors.norecipe;
@@ -60,7 +62,7 @@ class Recipe extends Component {
                 </div>
                 <div className="media-content">
                   <p className="subtitle is-6">
-                    Posted by {recipe.userName} on {recipe.created}
+                    Posted by {recipe.userName} on {dateCreated(recipe.created)}
                   </p>
                 </div>
               </div>

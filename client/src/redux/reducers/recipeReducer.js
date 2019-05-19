@@ -35,7 +35,8 @@ export default function(state = initialState, action) {
     case CONCAT_RECIPES:
       return {
         ...state,
-        recipes: state.recipes.concat(action.payload)
+        recipes: state.recipes.concat(action.payload),
+        loading: false
       };
     case DELETE_RECIPE:
       return {
