@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchRecipes, concatRecipes } from './../redux/actions/recipeActions';
+import {
+  fetchRecipes,
+  concatRecipes,
+  deleteRecipe
+} from './../redux/actions/recipeActions';
 import RecipeCard from './../components/RecipeCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -30,6 +34,10 @@ class Recipes extends Component {
     this.props.concatRecipes(limit, skip);
   };
 
+  deleteRecipeClick = id => {
+    this.props.deleteRecipe(id);
+  };
+
   render() {
     const { loading } = this.props.recipes;
     const { user } = this.props.auth;
@@ -46,7 +54,12 @@ class Recipes extends Component {
               loader={loading ? <h4>Loading...</h4> : ''}
             >
               {this.state.recipes.map((recipe, i) => (
-                <RecipeCard key={i} recipe={recipe} user={user._id} />
+                <RecipeCard
+                  key={i}
+                  recipe={recipe}
+                  userId={user.id}
+                  deleteRecipeClick={this.deleteRecipeClick}
+                />
               ))}
             </InfiniteScroll>
           </div>
@@ -64,5 +77,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchRecipes, concatRecipes }
+  { fetchRecipes, deleteRecipe, concatRecipes }
 )(Recipes);

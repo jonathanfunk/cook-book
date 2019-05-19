@@ -4,8 +4,18 @@ import moment from 'moment';
 
 const dateCreated = date => moment(date).format('LL');
 
-const RecipeCard = ({ recipe }) => {
-  const { name, image, userName, userAvatar, created, category, slug } = recipe;
+const RecipeCard = ({ recipe, userId, deleteRecipeClick }) => {
+  const {
+    name,
+    image,
+    userName,
+    userAvatar,
+    created,
+    category,
+    slug,
+    user,
+    _id
+  } = recipe;
   return (
     <div className="column is-one-third">
       <div className="card">
@@ -51,9 +61,18 @@ const RecipeCard = ({ recipe }) => {
                   View Recipe
                 </Link>
               </p>
-              <p className="control">
-                <button className="button is-danger">Delete post</button>
-              </p>
+              {userId === user ? (
+                <p className="control">
+                  <button
+                    onClick={() => {
+                      deleteRecipeClick(_id);
+                    }}
+                    className="button is-danger"
+                  >
+                    Delete post
+                  </button>
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
