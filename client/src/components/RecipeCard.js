@@ -70,7 +70,7 @@ const RecipeCard = ({ recipe, userId, deleteRecipeClick }) => {
                     }}
                     className="button is-danger"
                   >
-                    Delete post
+                    Delete Recipe
                   </button>
                 </p>
               ) : null}

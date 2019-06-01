@@ -48,7 +48,7 @@ class Recipes extends Component {
         <div className="hero-body">
           <div className="container">
             <InfiniteScroll
-              className="columns is-multiline is-mobile"
+              className="columns is-multiline is-desktop"
               dataLength={this.state.recipes.length}
               next={this.concatRecipes}
               hasMore={this.state.hasMore}
