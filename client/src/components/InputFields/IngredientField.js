@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const InputGroup = ({
   type,
@@ -32,6 +33,15 @@ const InputGroup = ({
       {error && <p className="help is-danger">{error}</p>}
     </div>
   );
+};
+
+InputGroup.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default InputGroup;

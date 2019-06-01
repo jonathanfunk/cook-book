@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
@@ -79,6 +80,12 @@ const RecipeCard = ({ recipe, userId, deleteRecipeClick }) => {
       </div>
     </div>
   );
+};
+
+RecipeCard.propTypes = {
+  recipe: PropTypes.object.isRequired,
+  userID: PropTypes.string,
+  deleteRecipeClick: PropTypes.func
 };
 
 export default RecipeCard;

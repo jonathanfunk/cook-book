@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { logoutUser } from './../redux/actions/authActions';
 import classnames from 'classnames';
 
@@ -103,6 +104,11 @@ class Navigation extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 });
+
+Navigation.propTypes = {
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

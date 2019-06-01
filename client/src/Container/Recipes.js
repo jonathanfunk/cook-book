@@ -5,6 +5,7 @@ import {
   concatRecipes,
   deleteRecipe
 } from './../redux/actions/recipeActions';
+import PropTypes from 'prop-types';
 import RecipeCard from './../components/RecipeCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -74,6 +75,15 @@ const mapStateToProps = state => ({
   errors: state.errors,
   auth: state.auth
 });
+
+Recipes.propTypes = {
+  recipes: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  fetchRecipes: PropTypes.func.isRequired,
+  deleteRecipe: PropTypes.func.isRequired,
+  concatRecipes: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

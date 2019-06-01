@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getRecipeBySlug } from './../redux/actions/recipeActions';
 import Message from '../components/Message';
 
@@ -113,6 +114,12 @@ const mapStateToProps = state => ({
   recipe: state.recipe,
   errors: state.errors
 });
+
+Recipe.propTypes = {
+  recipe: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  getRecipeBySlug: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

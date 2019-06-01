@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import InputGroup from './../components/InputFields/InputGroup';
 import Checkbox from './../components/InputFields/Checkbox';
@@ -215,6 +216,13 @@ const mapStateToProps = state => ({
   errors: state.errors,
   requesting: state.requesting
 });
+
+CreateRecipe.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  requesting: PropTypes.object.isRequired,
+  createRecipe: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

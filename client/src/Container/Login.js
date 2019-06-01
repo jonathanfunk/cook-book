@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { loginUser } from './../redux/actions/authActions';
 import InputGroup from '../components/InputFields/InputGroup';
@@ -108,6 +109,13 @@ const mapStateToProps = state => ({
   errors: state.errors,
   requesting: state.requesting
 });
+
+Login.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  requesting: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,
