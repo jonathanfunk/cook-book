@@ -93,7 +93,7 @@ class Recipe extends Component {
                   </tbody>
                 </table>
                 <h3 className="label is-medium">Directions</h3>
-                {recipe.directions}
+                <p>{recipe.directions}</p>
               </div>
             </div>
           </div>
