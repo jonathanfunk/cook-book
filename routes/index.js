@@ -20,20 +20,6 @@ const validateRecipeInput = require('./../validation/recipe');
 //Load Image Controller
 const imageController = require('./../config/imageController');
 
-//Test recipes endpoint
-router.get('/recipes/test', async (req, res) => {
-  res.json({
-    msg: 'Recipes works!'
-  });
-});
-
-//Test users endpoint
-router.get('/users/test', async (req, res) => {
-  res.json({
-    msg: 'Users works!'
-  });
-});
-
 // Register users
 router.post('/users/register', async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -158,13 +144,13 @@ router.get('/recipes/id/:id', async (req, res) => {
 //Test upload
 router.post(
   '/upload',
-  imageController.upload,
   imageController.resize,
+  imageController.upload,
   (req, res) => {
     if (req.fileValidationError) {
       res.json(req.fileValidationError);
     }
-    res.json(req.body);
+    res.json(req.file.data.link);
   }
 );
 
@@ -172,8 +158,8 @@ router.post(
 router.post(
   '/recipes',
   passport.authenticate('jwt', { session: false }),
-  imageController.upload,
   imageController.resize,
+  imageController.upload,
   (req, res) => {
     const { errors, isValid } = validateRecipeInput(req.body);
 
@@ -191,7 +177,7 @@ router.post(
       name: req.body.name,
       category: req.body.category,
       ingredients: req.body.ingredients,
-      image: req.body.image,
+      image: req.file.data.link,
       directions: req.body.directions
     });
     newRecipe.save();

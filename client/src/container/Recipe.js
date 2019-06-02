@@ -42,7 +42,7 @@ class Recipe extends Component {
                 <img
                   src={
                     recipe.image
-                      ? `/images/${recipe.image}`
+                      ? `${recipe.image}`
                       : `/images/landing-hero.jpg`
                   }
                   alt={recipe.name}

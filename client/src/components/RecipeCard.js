@@ -23,7 +23,7 @@ const RecipeCard = ({ recipe, userId, deleteRecipeClick }) => {
         <div className="card-image">
           <figure className="image is-4by3">
             <img
-              src={image ? `/images/${image}` : `/images/landing-hero.jpg`}
+              src={image ? `${image}` : `/images/landing-hero.jpg`}
               alt={name}
             />
           </figure>

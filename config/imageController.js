@@ -1,10 +1,12 @@
 const multer = require('multer');
+const ImgurStorage = require('multer-storage-imgur');
 const jimp = require('jimp');
 const uuid = require('uuid');
+const clientID = require('./keys').clientID;
 
 //Multer Options
 const multerOptions = {
-  storage: multer.memoryStorage(),
+  storage: ImgurStorage({ clientId: clientID }),
   fileFilter: (req, file, cb) => {
     const isPhoto = file.mimetype.startsWith('image/');
     if (isPhoto) {
@@ -27,6 +29,5 @@ exports.resize = async (req, res, next) => {
   req.body.image = `${uuid.v4()}.${extension}`;
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
-  await photo.write(`./client/public/images/${req.body.image}`);
   next();
 };
