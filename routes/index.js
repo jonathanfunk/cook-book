@@ -103,6 +103,7 @@ router.get('/recipes', async (req, res) => {
     const skipRecipes = parseInt(req.query.skip) || 0;
     const limitRecipes = parseInt(req.query.limit) || 0;
     const recipe = await Recipe.find(req.body)
+      .sort({ created: -1 })
       .skip(skipRecipes)
       .limit(limitRecipes);
     res.json(recipe);
