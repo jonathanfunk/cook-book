@@ -102,7 +102,10 @@ router.get('/recipes', async (req, res) => {
   try {
     const skipRecipes = parseInt(req.query.skip) || 0;
     const limitRecipes = parseInt(req.query.limit) || 0;
-    const recipe = await Recipe.find(req.body)
+    const filterCategory = req.query.category;
+    const recipe = await Recipe.find({
+      category: { $in: filterCategory.split(', ') }
+    })
       .sort({ created: -1 })
       .skip(skipRecipes)
       .limit(limitRecipes);
