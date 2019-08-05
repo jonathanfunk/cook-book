@@ -14,13 +14,17 @@ class Recipes extends Component {
     recipes: [],
     limit: 6,
     skip: 0,
+    category: 'drink,snack,breakfast,main,desert',
+    filterReset: true,
     hasMore: true
   };
 
   componentDidMount() {
-    const { limit, skip } = this.state;
-    this.props.fetchRecipes(limit, skip);
+    const { limit, skip, category } = this.state;
+    const categoryParams = category.split(',');
+    this.props.fetchRecipes(limit, skip, categoryParams);
     this.setState({ skip: skip + limit });
+    console.log(this.state.hasMore);
   }
 
   static getDerivedStateFromProps(nextProps, state) {
@@ -30,13 +34,25 @@ class Recipes extends Component {
   }
 
   concatRecipes = () => {
-    const { limit, skip } = this.state;
+    const { limit, skip, category } = this.state;
+    const categoryParams = category.split(',');
     this.setState({ skip: skip + limit });
-    this.props.concatRecipes(limit, skip);
+    this.props.concatRecipes(limit, skip, categoryParams);
+    console.log(this.state.hasMore);
   };
 
   deleteRecipeClick = id => {
     this.props.deleteRecipe(id);
+  };
+
+  filterChange = e => {
+    const item = e.target.value;
+    this.setState({ category: item, skip: 0, limit: 6 }, () => {
+      const { limit, skip, category } = this.state;
+      this.setState({ skip: skip + limit });
+      const categoryParams = category.split(',');
+      this.props.fetchRecipes(limit, skip, categoryParams);
+    });
   };
 
   render() {
@@ -47,6 +63,70 @@ class Recipes extends Component {
       <section className="hero is-fullheight-with-navbar">
         <div className="hero-body">
           <div className="container">
+            <div className="control box">
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="drink,snack,breakfast,main,desert"
+                  onChange={this.filterChange}
+                  checked={
+                    this.state.category === 'drink,snack,breakfast,main,desert'
+                  }
+                />
+                All
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="drink"
+                  onChange={this.filterChange}
+                  checked={this.state.category === 'drink'}
+                />
+                Drink
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="breakfast"
+                  onChange={this.filterChange}
+                  checked={this.state.category === 'breakfast'}
+                />
+                Breakfast
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="snack"
+                  onChange={this.filterChange}
+                  checked={this.state.category === 'snack'}
+                />
+                Snack
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="main"
+                  onChange={this.filterChange}
+                  checked={this.state.category === 'main'}
+                />
+                Main
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="category"
+                  value="desert"
+                  onChange={this.filterChange}
+                  checked={this.state.category === 'desert'}
+                />
+                Desert
+              </label>
+            </div>
             <InfiniteScroll
               className="columns is-multiline is-desktop"
               dataLength={this.state.recipes.length}

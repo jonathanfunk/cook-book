@@ -47,10 +47,7 @@ const RecipeCard = ({ recipe, userId, deleteRecipeClick }) => {
             <div className="tags are-medium">
               {category[0].split(',').map((categoryItem, i) => {
                 return (
-                  <span
-                    key={i}
-                    className="tag is-rounded is-white- is-primary is-medium"
-                  >
+                  <span key={i} className="tag is-rounded is-medium">
                     {categoryItem}
                   </span>
                 );

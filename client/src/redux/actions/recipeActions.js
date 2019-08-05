@@ -62,10 +62,12 @@ export const getRecipeBySlug = slug => async dispatch => {
 };
 
 //Fetch recipes
-export const fetchRecipes = (limit, skip) => async dispatch => {
+export const fetchRecipes = (limit, skip, category) => async dispatch => {
   try {
     dispatch(loading());
-    const recipes = await axios.get(`/api/recipes?skip=${skip}&limit=${limit}`);
+    const recipes = await axios.get(
+      `/api/recipes?skip=${skip}&limit=${limit}&category=${category}`
+    );
     dispatch({
       type: FETCH_RECIPES,
       payload: recipes.data
@@ -79,10 +81,12 @@ export const fetchRecipes = (limit, skip) => async dispatch => {
 };
 
 //Concat Recipes
-export const concatRecipes = (limit, skip) => async dispatch => {
+export const concatRecipes = (limit, skip, category) => async dispatch => {
   try {
     dispatch(loading());
-    const recipes = await axios.get(`/api/recipes?skip=${skip}&limit=${limit}`);
+    const recipes = await axios.get(
+      `/api/recipes?skip=${skip}&limit=${limit}&category=${category}`
+    );
     dispatch({
       type: CONCAT_RECIPES,
       payload: recipes.data
