@@ -61,7 +61,7 @@ class Recipes extends Component {
 
     return (
       <section className="hero is-fullheight-with-navbar">
-        <div className="hero-body">
+        <div className="hero-body recipe-list">
           <div className="container">
             <div className="control box">
               <label className="radio">
