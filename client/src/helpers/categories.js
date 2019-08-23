@@ -20,9 +20,9 @@ const categories = [
     label: 'Snack'
   },
   {
-    name: 'desert',
-    key: 'desert',
-    label: 'Desert'
+    name: 'dessert',
+    key: 'dessert',
+    label: 'Dessert'
   }
 ];
 

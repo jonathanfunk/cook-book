@@ -14,7 +14,7 @@ class Recipes extends Component {
     recipes: [],
     limit: 6,
     skip: 0,
-    category: 'drink,snack,breakfast,main,desert',
+    category: 'drink,snack,breakfast,main,dessert',
     filterReset: true,
     hasMore: true
   };
@@ -68,10 +68,10 @@ class Recipes extends Component {
                 <input
                   type="radio"
                   name="category"
-                  value="drink,snack,breakfast,main,desert"
+                  value="drink,snack,breakfast,main,dessert"
                   onChange={this.filterChange}
                   checked={
-                    this.state.category === 'drink,snack,breakfast,main,desert'
+                    this.state.category === 'drink,snack,breakfast,main,dessert'
                   }
                 />
                 All
